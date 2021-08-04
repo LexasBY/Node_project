@@ -1,5 +1,5 @@
 import express from 'express';
-import { todoRouter } from './routes/todo';
+import { todoRouter } from '../routes/todo';
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {
