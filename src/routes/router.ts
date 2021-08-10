@@ -1,21 +1,21 @@
 import express from 'express'
-import PostController from '../../controllers/controllers'
-import Post from '../../models/post'
+
+import baseController from '../../controllers/baseController'
+import authJwt from '..//middleware/tokenController'
+//import Post from '../../models/post'
 const router = express.Router()
 
 
-router.get('/auth/:id', (req, res) => {
-  return res.send('you got the Token!')
-})
+router.post('/auth/:id', baseController.auth)
 
-router.get('/post', PostController.getAll)
+router.get('/post', baseController.getAll)
 
-router.post('/post', PostController.create)
+router.post('/post', [authJwt.verifyToken], baseController.create)
 
-router.get('/post/:id', PostController.getOne)
+router.get('/post/:id', baseController.getOne)
 
-router.put('/post/:id', PostController.update)
+router.put('/post/:id', [authJwt.verifyToken], baseController.update)
 
-router.delete('/post/:id', PostController.delete)
+router.delete('/post/:id', [authJwt.verifyToken], baseController.delete)
 
 export default router
