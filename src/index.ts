@@ -8,9 +8,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const port = 3000;
-const DB_URL: string = 'mongodb+srv://lexas:lexanby81@cluster0.p7xpx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//const DB_URL: string = 'mongodb+srv://lexas:lexanby81@cluster0.p7xpx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const DB_URL: string = 'mongodb://mongo:27017/purity-db'
 
-app.use(express.json())
 app.get('/', (req, res) => {
   res.send('Hi from main page!');
 });
@@ -20,9 +20,12 @@ app.use(router)
 
 
 async function startApp() {
-  try{
-    await mongoose.connect(DB_URL, {useUnifiedTopology: true, useNewUrlParser: true})
-    app.listen(port, () => {  
+  try{    
+    await mongoose.connect(DB_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+    })
+    app.listen(port, () => {
       return console.log(`server is listening on ${port}`);
     });
   } catch (e) {
