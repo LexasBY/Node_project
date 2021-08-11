@@ -5,22 +5,18 @@ import { privateKey, publicKey } from "../keys/keygenerator"
 
 
 class PostController {
-
   async auth(req, res) {
     try {
       const user_id = req.params.id
       let payload: object = {
         user_id
-      }
-      
+      }      
       let signOptions: object = {        
         expiresIn: '24h',
         algorithm: 'RS256'
-      };
-      
-      const token = await jwt.sign(payload, privateKey, signOptions);
-      
-      res.cookie('token', token, {httpOnly: true}).status(200).json({ message: "Logged in successfully 😊 👌" });
+      };      
+      const token = await jwt.sign(payload, privateKey, signOptions);      
+      res.cookie('token', token, {httpOnly: true}).status(200).json({ message: "Logged is successfully!" });
     } catch (e) {
       res.status(500).json(e)
     }
@@ -29,8 +25,7 @@ class PostController {
   async create(req, res) {
     try {
       const { name } = req.body
-      const user_id = req.userId
-      //console.log(verified.user_id)
+      const user_id = req.userId     
       const post = await Post.create({name, user_id})
       console.log('post created')
       res.status(HttpStatus.OK).json(post)
@@ -54,8 +49,7 @@ class PostController {
       const post = await Post.findOne({user_id})
       if (!user_id) {
         res.status(400).json({message: 'Id не указан'})
-      }
-     
+      }     
       return res.json(post)
     } catch (e) {
       res.status(500).json(e)
@@ -67,8 +61,7 @@ class PostController {
       const user_id = req.userId
         console.log('user_id from JWT', user_id)
         const name = req.body
-       console.log('name from body', name)
-      // const changes: any = name
+       console.log('name from body', name)      
       if (!user_id){
         res.status(400).json({message: 'Id в токене не найден'})
       }
@@ -93,7 +86,6 @@ class PostController {
       res.status(500).json(e)
     }
   }
-
 }
 
 export default new PostController()
