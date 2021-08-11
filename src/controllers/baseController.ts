@@ -1,7 +1,7 @@
-import Post from "../models/post"
+import Post from "../../models/post"
 import HttpStatus from 'http-status-codes'
 import jwt from 'jsonwebtoken'
-import { privateKey, publicKey } from "../keys/keygenerator"
+import { privateKey, publicKey } from "../../keys/keygenerator"
 
 
 class PostController {
