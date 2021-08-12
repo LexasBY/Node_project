@@ -18,19 +18,12 @@ app.get('/', (req, res) => {
 // routes
 app.use(router)
 
-
-async function startApp() {
-  try{    
-    await mongoose.connect(DB_URL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
-    })
-    app.listen(port, () => {
-      return console.log(`server is listening on ${port}`);
-    });
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-startApp()
+mongoose.connect(DB_URL, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useFindAndModify: true,
+  useCreateIndex: true
+}).then(() => {
+  console.log(`server is listening on ${port}`)
+  app.listen(port)
+}).catch (() => console.error())
