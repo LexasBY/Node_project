@@ -15,7 +15,6 @@ app.get('/', (req, res) => {
   res.send('Hi from main page!');
 });
 
-// routes
 app.use(router)
 
 mongoose.connect(DB_URL, {

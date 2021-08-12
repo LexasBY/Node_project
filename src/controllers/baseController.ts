@@ -1,4 +1,4 @@
-import Post from "../../models/post"
+import Post from "../../src/models/post"
 import HttpStatus from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import { privateKey, publicKey } from "../../keys/keygenerator"
