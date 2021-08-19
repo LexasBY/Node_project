@@ -1,8 +1,8 @@
 import Post from "../../src/models/post"
 import HttpStatus from 'http-status-codes'
 import jwt from 'jsonwebtoken'
-import { privateKey, publicKey } from "../../keys/keygenerator"
-
+import fs from 'fs'
+import { privateKey} from '../../keys/keygenerator'
 
 class PostController {
   async auth(req, res) {

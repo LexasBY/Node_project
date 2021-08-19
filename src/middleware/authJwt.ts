@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken'
 import { publicKey } from '../../keys/keygenerator';
-const { TokenExpiredError } = jwt;
+import fs from 'fs'
+// const { TokenExpiredError } = jwt;
 
-const catchError = (err: any, res: any) => {
-  if (err instanceof TokenExpiredError) {   
-    return res.clearCookie('token').status(401).send({ message: "Unauthorized! Access Token was expired!" });    
-  }
-  return res.clearCookie('token').status(401).send({ message: "Unauthorized!" });  
-}
+// const catchError = (err: any, res: any) => {
+//   if (err instanceof TokenExpiredError) {   
+//     return res.clearCookie('token').status(401).send({ message: "Unauthorized! Access Token was expired!" });    
+//   }
+//   return res.clearCookie('token').status(401).send({ message: "Unauthorized!" });  
+// }
+
 const verifyToken = (req, res, next) => {
   let token = req.cookies.token;
   if (!token) {
