@@ -4,8 +4,6 @@ import authJwt from '../middleware/authJwt'
 const router = express.Router()
 
 
-router.post('/auth/:id', baseController.auth)
-
 router.get('/post', baseController.getAll)
 
 router.post('/post', [authJwt.verifyToken], baseController.create)

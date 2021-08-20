@@ -1,9 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
-import router from './routes/router'
+import router from './routes/user.router'
+import authRouter from './routes/auth.router'
 import {execSync} from 'child_process'
-import fs from 'fs'
+
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
@@ -18,6 +19,9 @@ app.get('/', (req, res) => {
 });
 
 app.use(router)
+app.use(authRouter)
+
+execSync('sh ./entrypoint.sh')
 
 mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
@@ -26,23 +30,5 @@ mongoose.connect(DB_URL, {
   useCreateIndex: true
 }).then(() => {  
   app.listen(port)
-  console.log(`server is listening on ${port}`)  
-}).then(()=>{
-  console.log('script for entrypoint')
-  execSync('sh ./entrypoint.sh')
-}).then(()=>{
-  console.log('script for keyReading')
-  fs.access('keys/private.pem' && 'keys/public.pem', (err)=> {
-    if (err) {
-      console.log('we do not have keypair')
-      return
-    }
-    console.log('we have keypair')
-    let privateKeyPem = fs.readFileSync('keys/private.pem')
-    let privateKey = privateKeyPem.toString('ascii');
-    console.log('privateKey:', privateKey)
-    let publicKeyPem = fs.readFileSync('keys/public.pem')
-    let publicKey = publicKeyPem.toString('ascii');
-    console.log('publicKey:', publicKey)    
-  })  
+  console.log(`server is listening on ${port}`)
 }).catch (() => console.error())
